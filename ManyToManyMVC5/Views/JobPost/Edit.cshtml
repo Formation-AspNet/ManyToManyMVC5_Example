@@ -1,0 +1,57 @@
+﻿@model ManyToManyMVC5.ViewModels.JobPostViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>JobPost</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.JobPost.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobPost.Title, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.JobPost.Title)
+                @Html.ValidationMessageFor(model => model.JobPost.Title)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobPost.EmployerID, "EmployerID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+    
+					@Html.DropDownListFor(m => m.JobPost.EmployerID,
+						(SelectList)ViewBag.EmployerID,
+						Model.JobPost.Employer.Id);
+
+	            @Html.ValidationMessageFor(model => model.JobPost.EmployerID)
+            </div>
+        </div>
+	    <div class="form-group">
+		    @Html.LabelFor(model=>model.AllJobTags,"JobTag",new {@class="control-label col-md-2"})
+		    <div class="col-md-10">
+			    @Html.ListBoxFor(m => m.SelectedJobTags, Model.AllJobTags)
+		    </div>
+	    </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
